@@ -5,29 +5,29 @@ services:
     ports:
       - 5173:5173
     volumes:
-      - ./infra/api/src:/api-data
+      - ./api:/api-data
 
   front:
     build: ./infra/front
     tty: true
     ports:
-      - 3000:3000
+      - 3002:3000
     volumes:
-      - ./infra/front/project:/front-data
+      - ./front:/front-data
 
   web:
     image: nginx:1.20-alpine
     ports:
-      - 8080:80
+      - 8082:80
     volumes:
-      - ./infra/api/src:/api-data
+      - ./api:/api-data
       - ./infra/nginx/default.conf:/etc/nginx/conf.d/default.conf
     working_dir: /api-data
 
   db:
     build: ./infra/mysql
     ports:
-      - 3306:3306
+      - 33002:3306
     volumes:
       - db-store:/var/lib/mysql
 
