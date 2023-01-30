@@ -1,51 +1,31 @@
 'use client'
-import { Box, Input, Button, Card, CardHeader, CardBody, Text, Flex, Badge } from '@chakra-ui/react';
-import { ChangeEvent, useState } from 'react';
-import { AxiosResponse, AxiosError } from 'axios';
-import { axiosApi } from '@/lib/axios';
+import { Box, Input, Button, Card, CardHeader, CardBody, Text, Flex } from '@chakra-ui/react';
+import { useState, ChangeEvent } from 'react';
+
+import { useAuth } from '@/components/hooks/useAuth';
 
 type LoginForm = {
   email: string;
   password: string;
 };
 
-type Validation = LoginForm & { loginFailed: string };
-
 export default function Home() {
   const [loginForm, setLoginForm] = useState<LoginForm>({
     'email': '',
     'password': ''
   });
-
-  const [validation, setValidation] = useState<Validation>({
-    email: '',
-    password: '',
-    loginFailed: '',
-  });
-
+  
   const updateLoginForm = (e: ChangeEvent<HTMLInputElement>) => {
-    setLoginForm({ ...loginForm, [e.target.name]:e.target.value })
+    setLoginForm({ ...loginForm, [e.target.name]:e.target.value });
   }
+  
+  const { validation, loading, login } = useAuth();
 
-  const login = () => {
-    axiosApi
-      .get('/sanctum/csrf-cookie')
-      .then((res) => {
-        axiosApi
-          .post('/api/login', loginForm)
-          .then((response: AxiosResponse) => {
-            console.log(response);
-          })
-          .catch((err: AxiosError) => {
-            console.log(err);
-          })
-      });
-  };
+  const onClickLogin = () => login(loginForm.email, loginForm.password);
 
   return (
       <main>
         <Flex h='calc(100vh)' justify='center' align='center'>
-          {/* <Box maxW='sm' borderWidth='1px' borderRadius='lg' padding='4'> */}
           <Card w={300} overflow='hidden' variant='outline'>
             <CardHeader>
               <Flex justify='center'>
@@ -55,15 +35,23 @@ export default function Home() {
             <CardBody>
               <Box mb='5'>
                 <Text>メールアドレス</Text>
-                <Input name='email' value={loginForm.email} placeholder='example@co.jp' onChange={updateLoginForm} />
+                <Input name='email' value={loginForm.email} placeholder='xxxxxxxx@example.com' onChange={updateLoginForm} />
+                {validation.email && ( <Text fontSize='xs' color='red'>{validation.email}</Text> )}
               </Box>
+
               <Box mb='5'>
                 <Text>パスワード</Text>
-                <Input type='password' placeholder='********' onChange={updateLoginForm} />
+                <Input type='password' name='password' value={loginForm.password} placeholder='********' onChange={updateLoginForm} />
+                {validation.password && ( <Text fontSize='xs' color='red'>{validation.password}</Text> )}
               </Box>
-              <Button name='password' value={loginForm.password} onClick={login} w='100%' colorScheme='teal' variant='solid' /*isLoading*/>
-                Login
-              </Button>
+
+              {validation.loginFailed && ( <Text fontSize='xs' color='red'>{validation.loginFailed}</Text> )}
+
+              {loading ? (
+                <Button onClick={onClickLogin} w='100%' colorScheme='teal' variant='solid' isLoading>Login</Button>
+              ): (
+                <Button onClick={onClickLogin} w='100%' colorScheme='teal' variant='solid'>Login</Button>
+              )}
             </CardBody>
           </Card>
           {/* </Box> */}
