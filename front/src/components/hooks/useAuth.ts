@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { AxiosResponse, AxiosError } from 'axios';
+import axios, { AxiosResponse, AxiosError } from 'axios';
 import { axiosApi } from '@/lib/axios';
 import { useToast } from '@chakra-ui/react';
 import { useCallback } from "react";
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 import { ToastSettings } from '@/types/toastSettings';
 
@@ -75,5 +75,37 @@ export const useAuth = () => {
         });
     };
 
-    return { validation, loading, login }
+    const isLoggedIn = async (): Promise<boolean> => {
+        let isLoggedIn: boolean = true;
+        await axiosApi
+            .get('/api/logged_in')
+            .then((response: AxiosResponse) => {
+                if (!response.data) {
+                    isLoggedIn = false;
+                }
+            })
+            .catch((err: AxiosError) => {
+                alert('システムエラーです。')
+            });
+        
+        return isLoggedIn;
+    }
+
+    const pathname = usePathname();
+    const [pageLoading, setPageLoading] = useState<boolean>(true);
+    const loginCheck = async () => {
+        if (await isLoggedIn() && pathname === '/login') {
+            router.push('/');
+            return;
+        }
+
+        if (!(await isLoggedIn()) && pathname !== '/login') {
+            router.push('/login');
+            return;
+        }
+
+        setPageLoading(false);
+    }
+
+    return { validation, loading, login, loginCheck, pageLoading };
 }

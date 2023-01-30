@@ -22,4 +22,12 @@ class LoginController extends Controller
             'loginFailed' => 'IDまたはパスワードが間違っています。'
         ]);
     }
+
+    public function logged_in() {
+        if (!Auth::user()) {
+            return response()->json(false);
+        }
+
+        return response()->json(true);
+    }
 }
