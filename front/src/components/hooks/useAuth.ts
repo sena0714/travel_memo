@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import axios, { AxiosResponse, AxiosError } from 'axios';
+import { AxiosResponse, AxiosError } from 'axios';
 import { axiosApi } from '@/lib/axios';
 import { useToast } from '@chakra-ui/react';
-import { useCallback } from "react";
-import { useRouter, usePathname } from 'next/navigation';
+import { useState, useCallback } from "react";
+import { useRouter } from 'next/navigation';
+import { useToastMessage } from '@/components/hooks/useToast';
 
 import { ToastSettings } from '@/types/toastSettings';
 
@@ -16,21 +16,7 @@ type Validation = {
 export const useAuth = () => {
     const router = useRouter();
 
-    const toast = useToast();
-    
-    const showToastMessage = useCallback(
-        (toastSettings: ToastSettings) => {
-            const { message, status } = toastSettings;
-            toast({
-                title: message,
-                status,
-                position: "top",
-                duration: 2000,
-                isClosable: true
-            });
-        },
-        [toast]
-    );
+    const { showToastMessage } = useToastMessage();
 
     const [validation, setValidation] = useState<Validation>({
         email: '',
@@ -39,7 +25,7 @@ export const useAuth = () => {
     });
     
     const [loading, setLoading] = useState<boolean>(false);
-    const login = (email: string, password: string) => {
+    const login =  useCallback((email: string, password: string) => {
         setLoading(true);
         setValidation({});
     
@@ -73,9 +59,9 @@ export const useAuth = () => {
                 setLoading(false);
             });
         });
-    };
+    }, []);
 
-    const isLoggedIn = async (): Promise<boolean> => {
+    const isLoggedIn =  useCallback(async (): Promise<boolean> => {
         let isLoggedIn: boolean = true;
         await axiosApi
             .get('/api/logged_in')
@@ -89,23 +75,7 @@ export const useAuth = () => {
             });
         
         return isLoggedIn;
-    }
+    }, [])
 
-    const pathname = usePathname();
-    const [pageLoading, setPageLoading] = useState<boolean>(true);
-    const loginCheck = async () => {
-        if (await isLoggedIn() && pathname === '/login') {
-            router.push('/');
-            return;
-        }
-
-        if (!(await isLoggedIn()) && pathname !== '/login') {
-            router.push('/login');
-            return;
-        }
-
-        setPageLoading(false);
-    }
-
-    return { validation, loading, login, loginCheck, pageLoading };
+    return { validation, loading, login, isLoggedIn };
 }

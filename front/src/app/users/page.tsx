@@ -1,24 +1,39 @@
 'use client'
-import { Text, Link } from '@chakra-ui/react';
-import { useLayoutEffect } from 'react';
+import { Text } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '@/components/hooks/useAuth';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+
+import { useToastMessage } from '@/components/hooks/useToast';
 
 export default function Users() {
-    const { loginCheck, pageLoading } = useAuth();
-    useLayoutEffect(() => {
-        loginCheck();
-    }, [loginCheck]);
+    const router = useRouter();
+
+    const { showToastMessage } = useToastMessage();
+
+    const { isLoggedIn } = useAuth();
+
+    const [pageLoading, setPageLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+        const init = async () => {
+            if (!(await isLoggedIn())) {
+                showToastMessage({message: 'ログイン認証を行ってください', status: 'error'});
+                router.push('/login');
+                return;
+            }
+            setPageLoading(false);
+        }
+        init();
+    }, [isLoggedIn]);
+
+    if (pageLoading) return <Text>Loading...</Text>;
 
     return (
         <main>
-            {pageLoading ? (
-                <Text>Loading...</Text>
-            ) : (
-                <>
-                    <Text>ユーザー一覧</Text>
-                    <Link href='http://192.168.20.153:3002'>HOME</Link>
-                </>
-            )}
+            <Text>ユーザー一覧</Text>
+            <Link href='/'>HOME</Link>
         </main>
     );
 }
