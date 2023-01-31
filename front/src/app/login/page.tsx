@@ -1,8 +1,9 @@
 'use client'
-import { Box, Input, Button, Card, CardHeader, CardBody, Text, Flex } from '@chakra-ui/react';
+import { Box, Input, Button, Card, CardHeader, CardBody, Text, Flex, Spinner } from '@chakra-ui/react';
 import { useState, ChangeEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
+import { Loading } from '@/components/organisms/Loading';
 import { useAuth } from '@/components/hooks/useAuth';
 
 type LoginForm = {
@@ -40,7 +41,7 @@ export default function Login() {
   
   const onClickLogin = () => login(loginForm.email, loginForm.password);
   
-  if (pageLoading) return <Text>Loading...</Text>;
+  if (pageLoading) return <Loading />;
 
   return (
       <main>

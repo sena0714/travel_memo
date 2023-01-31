@@ -1,11 +1,9 @@
 import { AxiosResponse, AxiosError } from 'axios';
 import { axiosApi } from '@/lib/axios';
-import { useToast } from '@chakra-ui/react';
 import { useState, useCallback } from "react";
 import { useRouter } from 'next/navigation';
-import { useToastMessage } from '@/components/hooks/useToast';
 
-import { ToastSettings } from '@/types/toastSettings';
+import { useToastMessage } from '@/components/hooks/useToast';
 
 type Validation = {
     email?: string;

@@ -5,6 +5,7 @@ import { useAuth } from '@/components/hooks/useAuth';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
+import { Loading } from '@/components/organisms/Loading';
 import { useToastMessage } from '@/components/hooks/useToast';
 
 export default function Users() {
@@ -28,7 +29,7 @@ export default function Users() {
         init();
     }, [isLoggedIn]);
 
-    if (pageLoading) return <Text>Loading...</Text>;
+    if (pageLoading) return <Loading />;
 
     return (
         <main>
