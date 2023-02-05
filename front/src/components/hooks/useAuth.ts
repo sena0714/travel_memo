@@ -1,9 +1,11 @@
+'use client'
 import { AxiosResponse, AxiosError } from 'axios';
 import { axiosApi } from '@/lib/axios';
 import { useState, useCallback } from "react";
 import { useRouter } from 'next/navigation';
 
 import { useToastMessage } from '@/components/hooks/useToast';
+import { LoginForm } from '@/types/loginForm';
 
 type Validation = {
     email?: string;
@@ -23,7 +25,7 @@ export const useAuth = () => {
     });
     
     const [loading, setLoading] = useState<boolean>(false);
-    const login =  useCallback((email: string, password: string) => {
+    const login =  useCallback(({email, password}: LoginForm) => {
         setLoading(true);
         setValidation({});
     
@@ -31,7 +33,7 @@ export const useAuth = () => {
         .get('/sanctum/csrf-cookie')
         .then((res) => {
             axiosApi
-            .post('/api/login', {email, password})
+            .post('/api/login', { email: email, password: password })
             .then((response: AxiosResponse) => {
                 showToastMessage({ message: 'ログインしました', status: 'success' });
                 router.push('/users');

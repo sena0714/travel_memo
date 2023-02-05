@@ -39,7 +39,7 @@ export default function Login() {
     setLoginForm({ ...loginForm, [e.target.name]:e.target.value });
   }
   
-  const onClickLogin = () => login(loginForm.email, loginForm.password);
+  const onClickLogin = () => login(loginForm);
   
   if (pageLoading) return <Loading />;
 
