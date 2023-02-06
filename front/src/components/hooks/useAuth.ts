@@ -13,7 +13,7 @@ type Validation = {
     loginFailed?: string 
 };
 
-export const useAuth = () => {
+export function useAuth() {
     const router = useRouter();
 
     const { showToastMessage } = useToastMessage();
@@ -36,7 +36,7 @@ export const useAuth = () => {
             .post('/api/login', { email: email, password: password })
             .then((response: AxiosResponse) => {
                 showToastMessage({ message: 'ログインしました', status: 'success' });
-                router.push('/users');
+                router.push('/');
             })
             .catch((err: AxiosError) => {
                 if (err.response?.status === 422) {

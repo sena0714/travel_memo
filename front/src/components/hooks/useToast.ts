@@ -3,7 +3,7 @@ import { useToast } from '@chakra-ui/react';
 
 import { ToastSettings } from '@/types/toastSettings';
 
-export const useToastMessage = () => {
+export function useToastMessage() {
     const toast = useToast();
     
     const showToastMessage = useCallback(

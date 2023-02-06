@@ -1,5 +1,4 @@
 import {NextFetchEvent, NextRequest, NextResponse} from "next/server";
-import { useEffect } from "react";
 
 const isAuthenticated = async (req: NextRequest, referer: string) => {
     const request = new Request('http://web:80/api/logged_in');
@@ -22,7 +21,8 @@ const isAuthenticated = async (req: NextRequest, referer: string) => {
 }
 
 export default async function middleware(req: NextRequest, ev: NextFetchEvent) {
-    if (req.nextUrl.pathname.endsWith('/login') && await isAuthenticated(req, process.env.NEXT_PUBLIC_MY_APP_URL+req.nextUrl.pathname)) {
+    console.log(req.nextUrl.pathname);
+    if (req.nextUrl.pathname.startsWith('/login') && await isAuthenticated(req, process.env.NEXT_PUBLIC_MY_APP_URL+req.nextUrl.pathname)) {
         const redirectUrl = req.nextUrl.clone();
         redirectUrl.pathname = '/';
         return NextResponse.redirect(redirectUrl);
@@ -31,7 +31,7 @@ export default async function middleware(req: NextRequest, ev: NextFetchEvent) {
     if (
         (
             req.nextUrl.pathname.endsWith('/') ||
-            req.nextUrl.pathname.endsWith('/users')
+            req.nextUrl.pathname.startsWith('/users')
         ) 
         && !(await isAuthenticated(req, process.env.NEXT_PUBLIC_MY_APP_URL+req.nextUrl.pathname))
     ) {

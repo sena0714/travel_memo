@@ -1,9 +1,7 @@
 'use client'
 import { Box, Input, Button, Card, CardHeader, CardBody, Text, Flex, Spinner } from '@chakra-ui/react';
-import { useState, ChangeEvent, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, ChangeEvent } from 'react';
 
-import { Loading } from '@/components/organisms/Loading';
 import { useAuth } from '@/components/hooks/useAuth';
 
 type LoginForm = {
@@ -12,8 +10,6 @@ type LoginForm = {
 };
 
 export default function Login() {
-  const router = useRouter();
-
   const { validation, loading, login, isLoggedIn } = useAuth();
 
   const [loginForm, setLoginForm] = useState<LoginForm>({
