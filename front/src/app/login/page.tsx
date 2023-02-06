@@ -16,20 +16,6 @@ export default function Login() {
 
   const { validation, loading, login, isLoggedIn } = useAuth();
 
-  const [pageLoading, setPageLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    const init = async () => {
-      if (await isLoggedIn()) {
-        router.push('/');
-        return;
-      }
-      setPageLoading(false);
-    }
-    init();
-  }, [isLoggedIn]);
-  
-
   const [loginForm, setLoginForm] = useState<LoginForm>({
     'email': '',
     'password': ''
@@ -40,8 +26,6 @@ export default function Login() {
   }
   
   const onClickLogin = () => login(loginForm);
-  
-  if (pageLoading) return <Loading />;
 
   return (
       <main>

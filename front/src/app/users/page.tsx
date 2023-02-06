@@ -9,27 +9,6 @@ import { Loading } from '@/components/organisms/Loading';
 import { useToastMessage } from '@/components/hooks/useToast';
 
 export default function Users() {
-    const router = useRouter();
-
-    const { showToastMessage } = useToastMessage();
-
-    const { isLoggedIn } = useAuth();
-
-    const [pageLoading, setPageLoading] = useState<boolean>(true);
-
-    useEffect(() => {
-        const init = async () => {
-            if (!(await isLoggedIn())) {
-                showToastMessage({message: 'ログイン認証を行ってください', status: 'error'});
-                router.push('/login');
-                return;
-            }
-            setPageLoading(false);
-        }
-        init();
-    }, [isLoggedIn]);
-
-    if (pageLoading) return <Loading />;
 
     return (
         <main>
