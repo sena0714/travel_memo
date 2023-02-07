@@ -1,8 +1,9 @@
 'use client'
-import { HStack, Box, Button, Text } from "@chakra-ui/react";
+import { HStack, Box, Button } from "@chakra-ui/react";
 import Link from "next/link";
+import React from "react";
 
-export default function Home() {
+export default function Layout({children}: {children: React.ReactNode}) {
     return (
         <>
             <header>
@@ -21,7 +22,7 @@ export default function Home() {
             </header>
             <main>
                 <Box p='4'>
-                <Text>ホーム</Text>
+                    {children}
                 </Box>
             </main>
         </>
