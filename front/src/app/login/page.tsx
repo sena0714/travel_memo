@@ -1,6 +1,8 @@
 'use client'
 import { Box, Input, Button, Card, CardHeader, CardBody, Text, Flex, Spinner } from '@chakra-ui/react';
 import { useState, ChangeEvent } from 'react';
+import { useForm } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
 
 import { useAuth } from '@/components/hooks/useAuth';
 
@@ -10,18 +12,13 @@ type LoginForm = {
 };
 
 export default function Login() {
-  const { validation, loading, login, isLoggedIn } = useAuth();
+  const { validation, loading, login } = useAuth();
 
-  const [loginForm, setLoginForm] = useState<LoginForm>({
-    'email': '',
-    'password': ''
-  });
-  
-  const updateLoginForm = (e: ChangeEvent<HTMLInputElement>) => {
-    setLoginForm({ ...loginForm, [e.target.name]:e.target.value });
-  }
-  
-  const onClickLogin = () => login(loginForm);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginForm>();
 
   return (
       <main>
@@ -35,22 +32,36 @@ export default function Login() {
             <CardBody>
               <Box mb='5'>
                 <Text>メールアドレス</Text>
-                <Input name='email' value={loginForm.email} placeholder='xxxxxxxx@example.com' onChange={updateLoginForm} />
+                <Input type="email" {...register('email', { required: '必須入力です。' })} placeholder='xxxxxxxx@example.com' />
+                <ErrorMessage
+                    errors={errors}
+                    name={'email'}
+                    render={({message}) => (
+                      <Text fontSize='small' color='red'>{message}</Text>
+                    )}
+                />
                 {validation.email && ( <Text fontSize='xs' color='red'>{validation.email}</Text> )}
               </Box>
 
               <Box mb='5'>
                 <Text>パスワード</Text>
-                <Input type='password' name='password' value={loginForm.password} placeholder='********' onChange={updateLoginForm} />
+                <Input type='password' {...register('password', { required: '必須入力です。' })} placeholder='********' />
+                <ErrorMessage
+                    errors={errors}
+                    name={'password'}
+                    render={({message}) => (
+                      <Text fontSize='small' color='red'>{message}</Text>
+                    )}
+                />
                 {validation.password && ( <Text fontSize='xs' color='red'>{validation.password}</Text> )}
               </Box>
 
               {validation.loginFailed && ( <Text fontSize='xs' color='red'>{validation.loginFailed}</Text> )}
 
               {loading ? (
-                <Button onClick={onClickLogin} w='100%' colorScheme='teal' variant='solid' isLoading>Login</Button>
+                <Button onClick={handleSubmit(login)} w='100%' colorScheme='teal' variant='solid' isLoading>Login</Button>
               ): (
-                <Button onClick={onClickLogin} w='100%' colorScheme='teal' variant='solid'>Login</Button>
+                <Button onClick={handleSubmit(login)} w='100%' colorScheme='teal' variant='solid'>Login</Button>
               )}
             </CardBody>
           </Card>

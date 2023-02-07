@@ -25,7 +25,7 @@ export function useAuth() {
     });
     
     const [loading, setLoading] = useState<boolean>(false);
-    const login =  useCallback(({email, password}: LoginForm) => {
+    const login =  useCallback((data: LoginForm) => {
         setLoading(true);
         setValidation({});
     
@@ -33,7 +33,7 @@ export function useAuth() {
         .get('/sanctum/csrf-cookie')
         .then((res) => {
             axiosApi
-            .post('/api/login', { email: email, password: password })
+            .post('/api/login', { email: data.email, password: data.password })
             .then((response: AxiosResponse) => {
                 showToastMessage({ message: 'ログインしました', status: 'success' });
                 router.push('/');
