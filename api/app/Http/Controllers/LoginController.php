@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\UserIdResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -15,7 +15,7 @@ class LoginController extends Controller
     {
         if (Auth::attempt($request->all())) {
             $request->session()->regenerate();
-            return new UserResource(Auth::user());
+            return new UserIdResource(Auth::user());
         }
 
         throw ValidationException::withMessages([
