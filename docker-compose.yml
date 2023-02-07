@@ -6,7 +6,7 @@ services:
       - 5173:5173
     volumes:
       - ./api:/api-data
-
+  
   front:
     build: ./infra/front
     tty: true
@@ -14,6 +14,7 @@ services:
       - 3002:3000
     volumes:
       - ./front:/front-data
+      - nestjs-node-modules:/front-data/node_modules
 
   web:
     image: nginx:1.20-alpine
@@ -33,3 +34,4 @@ services:
 
 volumes:
   db-store:
+  nestjs-node-modules:
