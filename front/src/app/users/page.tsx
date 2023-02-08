@@ -1,6 +1,4 @@
 import React, { use } from "react";
-import { AxiosResponse } from 'axios';
-import { axiosApiFromServerSide } from '@/lib/axios';
 import { Text } from "@/components/ChakraComponents";
 
 import UserDetail from '@/components/UserDetail';
@@ -12,22 +10,25 @@ type User = {
 };
 
 async function fetchUsers(): Promise<User[]> {
-    const response: AxiosResponse = await axiosApiFromServerSide.get('/api/users');
-    const users: User[] = response.data.data;
-    return users;
+    const res = await fetch(process.env.NEXT_PUBLIC_API_URL_FROM_SERVER_SIDE+'/api/users');
+    
+    if (!res.ok) {
+            throw new Error("Failed to fetch users");
+    }
+
+    const data = await res.json();
+    return data.data as User[];
 }
 
-export default function Users() {
-    const users = use(fetchUsers());
+export default async function Users() {
+    const users = await fetchUsers();
 
     return (
         <main>
             <Text fontSize='2xl' fontWeight='bold'>ユーザー一覧</Text>
-            {users && users.map((user: User) => {
-                return (
-                    <UserDetail key={user.id} user={user} />
-                );
-            })}
+            {users && users.map((user: User) => (
+                <UserDetail key={user.id} user={user} />
+            ))}
         </main>
     );
 }

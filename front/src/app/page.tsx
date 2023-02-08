@@ -8,12 +8,8 @@ export default function Home() {
                 <Box bg='teal' p='4'>
                     <nav>
                         <HStack display='flex' justify='left' spacing='4'>
-                            <Link href='/'>
-                                <Button bg='teal.400' color='white' _hover={{ bg: 'teal.500' }}>Home</Button>
-                            </Link>
-                            <Link href='/users'>
-                                <Button bg='teal.400' color='white' _hover={{ bg: 'teal.500' }}>Users</Button>
-                            </Link>
+                            <Button as={Link} href='/' bg='teal.400' color='white' _hover={{ bg: 'teal.500' }}>Home</Button>
+                            <Button as={Link} href='/users' bg='teal.400' color='white' _hover={{ bg: 'teal.500' }}>Users</Button>
                         </HStack>
                     </nav>
                 </Box>
