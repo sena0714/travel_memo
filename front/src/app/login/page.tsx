@@ -1,6 +1,5 @@
 'use client'
-import { Box, Input, Button, Card, CardHeader, CardBody, Text, Flex, Spinner } from '@chakra-ui/react';
-import { useState, ChangeEvent } from 'react';
+import { Box, Input, Button, Card, CardHeader, CardBody, Text, Flex, Spinner } from '@/components/ChakraComponents';
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 

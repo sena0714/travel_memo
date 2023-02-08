@@ -1,5 +1,4 @@
-'use client'
-import { HStack, Box, Button } from "@chakra-ui/react";
+import { HStack, Box, Button } from "@/components/ChakraComponents";
 import Link from "next/link";
 import React from "react";
 

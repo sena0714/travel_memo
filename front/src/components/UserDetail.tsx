@@ -1,6 +1,4 @@
-'use client'
-
-import { Box, Text } from "@chakra-ui/react"
+import { Box, Text } from '@/components/ChakraComponents';
 
 type User = {
     id: string;

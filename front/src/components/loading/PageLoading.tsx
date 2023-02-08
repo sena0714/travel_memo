@@ -1,5 +1,4 @@
-'use client'
-import { Text, Spinner, Flex } from '@chakra-ui/react';
+import { Text, Spinner, Flex } from '@/components/ChakraComponents';
 
 export function PageLoading() {
     return (

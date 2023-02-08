@@ -1,9 +1,9 @@
-import { use } from 'react';
+import React, { use } from "react";
 import { AxiosResponse } from 'axios';
 import { axiosApiFromServerSide } from '@/lib/axios';
+import { Text } from "@/components/ChakraComponents";
 
 import UserDetail from '@/components/UserDetail';
-import PageTitle from '@/components/PageTitle';
 
 type User = {
     id: string;
@@ -22,7 +22,7 @@ export default function Users() {
 
     return (
         <main>
-            <PageTitle>ユーザー一覧</PageTitle>
+            <Text fontSize='2xl' fontWeight='bold'>ユーザー一覧</Text>
             {users && users.map((user: User) => {
                 return (
                     <UserDetail key={user.id} user={user} />
