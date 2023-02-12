@@ -20,17 +20,17 @@ class UserSeeder extends Seeder
             [
                 'name' => 'sena',
                 'email' => 'sena@example.com',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('pass0000'),
             ],
             [
                 'name' => 'chocolat',
                 'email' => 'chocolat@example.com',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('pass0000'),
             ],
             [
                 'name' => 'cacao',
                 'email' => 'cacao@example.com',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('pass0000'),
             ],
         ]);
     }

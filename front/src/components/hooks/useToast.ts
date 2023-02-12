@@ -3,7 +3,7 @@ import { useToast } from '@/components/ChakraComponents';
 
 import { ToastSettings } from '@/types/toastSettings';
 
-export function useToastMessage() {
+export default function useToastMessage() {
     const toast = useToast();
     
     const showToastMessage = useCallback(

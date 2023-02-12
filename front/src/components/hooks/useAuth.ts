@@ -4,7 +4,7 @@ import { axiosApi } from '@/lib/axios';
 import { useState, useCallback } from "react";
 import { useRouter } from 'next/navigation';
 
-import { useToastMessage } from '@/components/hooks/useToast';
+import useToastMessage from '@/components/hooks/useToast';
 import { LoginForm } from '@/types/loginForm';
 
 type Validation = {

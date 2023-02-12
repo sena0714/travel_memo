@@ -21,7 +21,13 @@ const isAuthenticated = async (req: NextRequest, referer: string) => {
 }
 
 export default async function middleware(req: NextRequest, ev: NextFetchEvent) {
-    if (req.nextUrl.pathname.startsWith('/login') && await isAuthenticated(req, process.env.NEXT_PUBLIC_MY_APP_URL+req.nextUrl.pathname)) {
+    if (
+        (
+            req.nextUrl.pathname.startsWith('/auth/login') ||
+            req.nextUrl.pathname.startsWith('/auth/register') 
+        )
+        && await isAuthenticated(req, process.env.NEXT_PUBLIC_MY_APP_URL+req.nextUrl.pathname)
+    ) {
         const redirectUrl = req.nextUrl.clone();
         redirectUrl.pathname = '/';
         return NextResponse.redirect(redirectUrl);
@@ -35,7 +41,7 @@ export default async function middleware(req: NextRequest, ev: NextFetchEvent) {
         && !(await isAuthenticated(req, process.env.NEXT_PUBLIC_MY_APP_URL+req.nextUrl.pathname))
     ) {
         const redirectUrl = req.nextUrl.clone();
-        redirectUrl.pathname = '/login';
+        redirectUrl.pathname = '/auth/login';
         return NextResponse.redirect(redirectUrl);
     }
 
