@@ -1,4 +1,4 @@
-import { Box, Text } from '@/components/ChakraComponents';
+import { Box, Text } from '@/components/wrapper/ChakraComponents';
 
 type User = {
     id: string;

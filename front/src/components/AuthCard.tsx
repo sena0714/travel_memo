@@ -1,5 +1,4 @@
-import { Flex, Card, CardHeader, CardBody, Text } from '@/components/ChakraComponents';
-import { Z_ASCII } from 'zlib';
+import { Flex, Card, CardHeader, CardBody, Text } from '@/components/wrapper/ChakraComponents';
 
 type Props = {
     title: string;

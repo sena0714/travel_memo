@@ -1,5 +1,5 @@
 import { ErrorMessage } from '@hookform/error-message';
-import { Text } from '@/components/ChakraComponents';
+import { Text } from '@/components/wrapper/ChakraComponents';
 
 type Props = {
     errors: any;

@@ -1,5 +1,5 @@
 'use client'
-import { Box, Input, Button, Card, CardHeader, CardBody, Text, Flex, Spinner } from '@/components/ChakraComponents';
+import { Box, Input, Button, Card, CardHeader, CardBody, Text, Flex, Spinner } from '@/components/wrapper/ChakraComponents';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { useState } from 'react';

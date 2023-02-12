@@ -1,4 +1,4 @@
-import { Text, Spinner, Flex } from '@/components/ChakraComponents';
+import { Text, Spinner, Flex } from '@/components/wrapper/ChakraComponents';
 
 export function PageLoading() {
     return (

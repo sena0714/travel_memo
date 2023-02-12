@@ -1,8 +1,8 @@
 import React, { use } from "react";
 import { AxiosResponse } from 'axios';
-import { axiosApiFromServerSide } from '@/lib/axios';
-import { Text } from "@/components/ChakraComponents";
 
+import { axiosApiFromServerSide } from '@/lib/axios';
+import { Text } from "@/components/wrapper/ChakraComponents";
 import UserDetail from '@/components/UserDetail';
 
 type User = {

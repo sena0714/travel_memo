@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useToast } from '@/components/ChakraComponents';
+import { useToast } from '@/components/wrapper/ChakraComponents';
 
 import { ToastSettings } from '@/types/toastSettings';
 
