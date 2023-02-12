@@ -1,5 +1,4 @@
-import { HStack, Box, Button, Text } from "@/components/wrapper/ChakraComponents";
-import Link from "next/link";
+import { Box, Text } from "@/components/wrapper/ChakraComponents";
 
 import Header from "@/components/layout/Header";
 
