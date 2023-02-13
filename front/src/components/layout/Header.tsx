@@ -1,10 +1,15 @@
+'use client'
 /* @ts-ignore */
 import { HStack, Box, Flex, Button, Menu, MenuButton, MenuList, MenuItem, IconButton, HamburgerIcon, Icon } from "@/components/wrapper/ChakraComponents";
 /* @ts-ignore */
 import { MdLogout } from '@/components/wrapper/ReactIcons';
 import Link from "next/link";
 
+import useAuth from '@/components/hooks/useAuth';
+
 export default function Header() {
+    const { logout } = useAuth();
+
     return (
         <header>
             <Box bg='teal' p='4'>
@@ -29,7 +34,7 @@ export default function Header() {
                             _active={{ bg: 'teal.400' }}
                         />
                         <MenuList>
-                            <MenuItem icon={<Icon as={MdLogout} fontSize='16px' verticalAlign='middle' />}>
+                            <MenuItem onClick={logout} icon={<Icon as={MdLogout} fontSize='16px' verticalAlign='middle' />}>
                                 ログアウト
                             </MenuItem>
                         </MenuList>

@@ -13,7 +13,7 @@ type Validation = {
     loginFailed?: string 
 };
 
-export function useAuth() {
+export default function useAuth() {
     const router = useRouter();
 
     const { showToastMessage } = useToastMessage();
@@ -75,7 +75,18 @@ export function useAuth() {
             });
         
         return isLoggedIn;
-    }, [])
+    }, []);
 
-    return { validation, loading, login, isLoggedIn };
+    const logout = useCallback(async (): Promise<void> => {
+        try {
+            const res = await axiosApi.post('/api/logout');
+            router.push('/auth/login');
+            console.log(res);
+        } catch (err) {
+            /* @ts-ignore */
+            console.log(err.response?.data.errors);
+        }
+    }, []);
+
+    return { validation, loading, login, isLoggedIn, logout };
 }

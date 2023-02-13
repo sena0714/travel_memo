@@ -10,7 +10,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
@@ -26,28 +28,33 @@ class AuthController extends Controller
         ]);
     }
 
-    public function logged_in() {
+    public function logged_in(): JsonResponse {
         if (!Auth::user()) {
             return response()->json(false);
         }
 
-        return response()->json(true);
+        return response()->json(true, Response::HTTP_OK);
     }
 
-    public function register(UserRegisterRequest $request) {
+    public function register(UserRegisterRequest $request): JsonResource {
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
 
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            $request->session()->regenerate();
-            return new UserIdResource(Auth::user());
+        if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            throw ValidationException::withMessages([
+                'userRegisterFailed' => 'ユーザーの作成に失敗しました。'
+            ]);
         }
+        
+        $request->session()->regenerate();
+        return new UserIdResource(Auth::user());
+    }
 
-        throw ValidationException::withMessages([
-            'userRegisterFailed' => 'ユーザーの作成に失敗しました。'
-        ]);
+    public function logout (Request $request): JsonResponse {
+        Auth::logout();
+        return response()->json(true, Response::HTTP_OK);
     }
 }

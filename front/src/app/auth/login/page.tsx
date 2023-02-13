@@ -3,7 +3,7 @@ import { Box, Input, Button, Text, Flex } from '@/components/wrapper/ChakraCompo
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 
-import { useAuth } from '@/components/hooks/useAuth';
+import useAuth from '@/components/hooks/useAuth';
 import AuthCard from '@/components/AuthCard';
 import ValidationErrorMessage from '@/components/ValidationErrorMessage';
 
