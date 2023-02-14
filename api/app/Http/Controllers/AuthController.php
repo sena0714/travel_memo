@@ -29,7 +29,7 @@ class AuthController extends Controller
     }
 
     public function logged_in(): JsonResponse {
-        if (!Auth::user()) {
+        if (!Auth::check()) {
             return response()->json(false);
         }
 
