@@ -18,14 +18,14 @@ class AuthController extends Controller
 {
     public function login(LoginRequest $request): JsonResource
     {
-        if (Auth::attempt($request->all())) {
-            $request->session()->regenerate();
-            return new UserIdResource(Auth::user());
+        if (!Auth::attempt($request->all())) {
+            throw ValidationException::withMessages([
+                'loginFailed' => 'IDまたはパスワードが間違っています。'
+            ]);
         }
-
-        throw ValidationException::withMessages([
-            'loginFailed' => 'IDまたはパスワードが間違っています。'
-        ]);
+        
+        $request->session()->regenerate();
+        return new UserIdResource(Auth::user());
     }
 
     public function logged_in(): JsonResponse {
