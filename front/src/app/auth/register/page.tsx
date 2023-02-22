@@ -9,7 +9,7 @@ import { axiosApi } from '@/lib/axios';
 import { AxiosResponse } from 'axios';
 import ValidationErrorMessage from '@/components/ValidationErrorMessage';
 import useToastMessage from '@/components/hooks/useToast';
-import AuthCard from '@/components/AuthCard';
+import AuthCard from '@/components/auth/AuthCard';
 
 type AccountRegisterForm = {
     name: string;
@@ -29,7 +29,7 @@ export default function Register() {
     const router = useRouter();
 
     const { showToastMessage } = useToastMessage();
-    
+
     const {
         register,
         handleSubmit,
@@ -55,7 +55,7 @@ export default function Register() {
             Object.keys(errors).map((key: string) => {
                 newValidationMessages[key] = errors[key][0];
             });
-            setValidationMessages(newValidationMessages); 
+            setValidationMessages(newValidationMessages);
             showToastMessage({ message: 'ユーザーの登録に失敗しました。', status: 'error' });
         }
 
@@ -75,16 +75,16 @@ export default function Register() {
 
                     <Box mb='5'>
                         <Text>メールアドレス</Text>
-                        <Input 
-                            type="email" 
-                            { ...register('email', { 
-                                required: '必須入力です。', 
+                        <Input
+                            type="email"
+                            { ...register('email', {
+                                required: '必須入力です。',
                                 pattern: {
                                     value: /^[\w\-._]+@[\w\-._]+\.[A-Za-z]+/,
                                     message: "入力形式がメールアドレスではありません。"
                                 }
-                            }) }  
-                            placeholder='xxxxxxxx@example.com' 
+                            }) }
+                            placeholder='xxxxxxxx@example.com'
                         />
                         <ValidationErrorMessage errors={errors} name='email' />
                         {validationMessages.email && ( <Text fontSize='xs' color='red'>{validationMessages.email}</Text> )}
@@ -92,13 +92,13 @@ export default function Register() {
 
                     <Box mb='5'>
                         <Text>パスワード</Text>
-                        <Input 
-                            type='password' 
-                            { ...register('password', { 
-                                required: '必須入力です。', 
+                        <Input
+                            type='password'
+                            { ...register('password', {
+                                required: '必須入力です。',
                                 pattern: { value: /^(?=.*?[a-zA-Z])(?=.*?\d)[a-zA-Z\d]{8,}$/, message: '半角英数字含む8文字以上で入力してください。' }
-                            }) } 
-                            placeholder='********' 
+                            }) }
+                            placeholder='********'
                         />
                         <ValidationErrorMessage errors={errors} name='password' />
                         {validationMessages.password && ( <Text fontSize='xs' color='red'>{validationMessages.password}</Text> )}

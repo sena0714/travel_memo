@@ -81,7 +81,6 @@ export default function useAuth() {
         try {
             const res = await axiosApi.post('/api/logout');
             router.push('/auth/login');
-            console.log(res);
         } catch (err) {
             /* @ts-ignore */
             console.log(err.response?.data.errors);
