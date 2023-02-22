@@ -5,7 +5,7 @@ import { HStack, Box, Flex, Button, Menu, MenuButton, MenuList, MenuItem, IconBu
 import { MdLogout } from '@/components/wrapper/ReactIcons';
 import Link from "next/link";
 
-import useAuth from '@/components/hooks/useAuth';
+import useAuth from '@/components/auth/useAuth';
 
 export default function Header() {
     const { logout } = useAuth();

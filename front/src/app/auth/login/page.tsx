@@ -3,8 +3,8 @@ import { Box, Input, Button, Text, Flex } from '@/components/wrapper/ChakraCompo
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 
-import useAuth from '@/components/hooks/useAuth';
-import AuthCard from '@/components/AuthCard';
+import useAuth from '@/components/auth/useAuth';
+import AuthCard from '@/components/auth/AuthCard';
 import ValidationErrorMessage from '@/components/ValidationErrorMessage';
 
 type LoginForm = {
@@ -28,15 +28,15 @@ export default function Login() {
                     <Box mb='5'>
                         <Text>メールアドレス</Text>
                         <Input
-                            type="email" 
-                            { ...register('email', { 
-                                required: '必須入力です。', 
+                            type="email"
+                            { ...register('email', {
+                                required: '必須入力です。',
                                 pattern: {
                                     value: /^[\w\-._]+@[\w\-._]+\.[A-Za-z]+/,
                                     message: "入力形式がメールアドレスではありません。"
                                 }
-                            }) }  
-                            placeholder='xxxxxxxx@example.com' 
+                            }) }
+                            placeholder='xxxxxxxx@example.com'
                         />
                         <ValidationErrorMessage errors={errors} name='email' />
                         {validation.email && ( <Text fontSize='xs' color='red'>{validation.email}</Text> )}
