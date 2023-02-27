@@ -13,8 +13,14 @@ type User = {
 };
 
 async function fetchUsers(): Promise<User[]> {
-    const response: AxiosResponse = await axiosApiFromServerSide.get('/api/users');
-    const users: User[] = response.data.data;
+    const request = new Request('http://web:80/api/users');
+    const res = await fetch(request, {
+        method: 'GET',
+        cache: "no-store",
+        credentials: "include",
+    });
+    const jsonRes = await res.json();
+    const users: User[] = jsonRes.data;
     return users;
 }
 
